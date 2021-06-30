@@ -1,0 +1,25 @@
+#ifndef OBJECT_H
+#define OBJECT_H
+
+#include <memory>
+#include <string>
+#include "../visitor/visitor.h"
+#include "../math/point.h"
+#include "../math/matrix.h"
+
+
+class Object {
+public:
+    Object() = default;
+    Object(std::string id): id(name) {}
+    virtual ~Object() = default;
+    virtual void transform(const std::shared_ptr<Matrix>) = 0;
+    virtual void accept(std::shared_ptr<Visitor> visitor) = 0;
+    std::string getId() { return id; }
+private:
+    std::string id;
+};
+
+} // namespace objects
+
+#endif // OBJECT_H

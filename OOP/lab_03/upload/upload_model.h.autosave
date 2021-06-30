@@ -1,0 +1,33 @@
+#ifndef UPLOAD_MODEL_HPP
+#define UPLOAD_MODEL_HPP
+
+#include <memory>
+#include "managers/upload_manager.h"
+#include "objects/model/model.hpp"
+#include "upload/base_loader.h"
+#include "upload/base_model_builder.h"
+
+class UploadModel: public UploadManager 
+{
+public:
+    explicit UploadModel(BaseLoader *loader);
+    std::shared_ptr<Model> loadModel(std::string model_name, std::string source_name) override;
+private:
+    std::unique_ptr<BaseLoader> _loader;
+    std::unique_ptr<BaseModelBuilder> _builder;
+};
+
+
+class UploadModel
+{
+protected:
+    shared_ptr<BaseLoader> loader;
+public:
+    UploadModel(shared_ptr<BaseLoader> ldr) : loader(ldr) {}
+    virtual ~UploadModel() = 0;
+    virtual std::shared_ptr<Model> load_model(std::string model_name, std::string source_name, shared_ptr<BaseModelBuilder> builder)=0;
+};
+
+UploadModel::~UploadModel() = default;
+
+#endif // UPLOAD_MODEL_HPP
